@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 
 var appRoutes = require('./routes/app');
 
-
 var app = express();
 
 // view engine setup
@@ -21,14 +20,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// This is required to allow CORS
-// i.e. if our client and server are hosted on different domains.
+
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept');
-  res.setHeader('Access-Control-Allow-Methods','  POST, GET, PATCH, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
   next();
-})
+});
+
 app.use('/', appRoutes);
 
 // catch 404 and forward to error handler
