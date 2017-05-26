@@ -1,13 +1,20 @@
 import { MessageComponent } from './messages/message.component';
-import { MyMessageListComponent } from './messages/message-list.component';
+import { MessageListComponent } from './messages/message-list.component';
+import { MessageInputComponent } from './messages/message-input.component';
+import { MessageService } from './messages/message.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from "./app.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
-    declarations: [AppComponent, MessageComponent, MyMessageListComponent],
-    imports: [BrowserModule],
+    declarations: [AppComponent, 
+                   MessageComponent, 
+                   MessageListComponent, 
+                   MessageInputComponent],
+    providers: [MessageService],                   
+    imports: [BrowserModule, FormsModule],
     bootstrap: [AppComponent]
 })
 export class AppModule {
