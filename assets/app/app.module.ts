@@ -1,3 +1,6 @@
+import { SignupComponent } from './auth/signup.component';
+import { SigninComponent } from './auth/signin.component';
+import { LogoutComponent } from './auth/logout.component';
 import { AppRoutingModule } from './app.routing';
 import { HeaderComponent } from './shared/header.component';
 import { AuthenticationComponent } from './auth/authentication.component';
@@ -19,7 +22,10 @@ import { FormsModule } from "@angular/forms";
                    MessageInputComponent,
                    MessagesComponent,
                    AuthenticationComponent,
-                   HeaderComponent],
+                   HeaderComponent,
+                   LogoutComponent,
+                   SigninComponent,
+                   SignupComponent],
     providers: [MessageService],                   
     imports: [BrowserModule, FormsModule, AppRoutingModule],
     bootstrap: [AppComponent]
