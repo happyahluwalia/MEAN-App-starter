@@ -1,17 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 @Component({
     selector: 'my-signup',
-    template: `
-                    <div class="col-md-8 col-md-offset-2">
-                        <button class="btn btn-danger" (click)="onLogout()">Sign Up</button>
-                        
-                    </div>
-                `
+    templateUrl: './signup.component.html'
 })
 export class SignupComponent implements OnInit {
+    myForm: FormGroup;
     constructor() { }
 
-    ngOnInit() { }
-    onLogout() {}
+    ngOnInit() { 
+        this.myForm = new FormGroup({
+                firstName: new FormControl('Enter First Name', Validators.required),
+                lastName: new FormControl('Enter Last Name', Validators.required),
+                Email: new FormControl('Enter Email', [Validators.required,Validators.email]),
+                Password: new FormControl('Enter Password', Validators.required)  
+        })
+    }
+    onSubmit() {
+        console.log(this.myForm);
+        this.myForm.reset();
+    }
 }

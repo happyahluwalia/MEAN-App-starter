@@ -13,7 +13,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from "./app.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [AppComponent, 
@@ -27,7 +27,7 @@ import { FormsModule } from "@angular/forms";
                    SigninComponent,
                    SignupComponent],
     providers: [MessageService],                   
-    imports: [BrowserModule, FormsModule, AppRoutingModule],
+    imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule],
     bootstrap: [AppComponent]
 })
 export class AppModule {
