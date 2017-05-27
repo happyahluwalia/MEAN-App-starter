@@ -6,9 +6,9 @@ import { Message } from './message.model';
 @Component({
     selector: 'my-message-list',
     template: ` 
-                <my-messages [message]="message" 
+                <my-message [message]="message" 
                         (editClicked)="message.content=$event; message.author=$event;"
-                        *ngFor="let message of messages"></my-messages>
+                        *ngFor="let message of messages"></my-message>
               `
 })
 

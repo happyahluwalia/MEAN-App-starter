@@ -2,7 +2,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Message } from "./message.model";
 
 @Component({
-    selector: 'my-messages',
+    selector: 'my-message',
     templateUrl: './message.component.html',
     styleUrls: ['./message.component.css']
 })
