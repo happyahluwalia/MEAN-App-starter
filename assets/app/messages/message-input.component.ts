@@ -12,7 +12,6 @@ export class MessageInputComponent {
     constructor(private messageService: MessageService) {}
 
     onSubmit(form:NgForm) {
-        console.log('here');
         this.messageService.addMessage(new Message(form.value.content, 'happy'));
         form.reset();
     }
