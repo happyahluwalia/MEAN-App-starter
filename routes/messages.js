@@ -3,6 +3,22 @@ var router = express.Router();
 var Message = require('../model/message');
 var jwt = require('jsonwebtoken');
 
+// Before we access any of the below routes check if the incoming
+// request has a valid JWT token
+router.use('/', function (req, res, next){
+    jwt.verify(req.query.token, 'IamASecretKey1#', function(err, decoded) {
+        if(err) {
+            return res.status(401).json({
+                title: 'Unauthorized access',
+                error: err
+            })
+        }
+        //if the token is valid then let request continue to its route.
+        next();
+    })
+})
+
+
 router.post('/', function(req, res, next){
     var msg = new Message({
         content: req.body.content
@@ -19,21 +35,6 @@ router.post('/', function(req, res, next){
             obj: result
         })
     });
-})
-
-// Before we access any of the below routes check if the incoming
-// request has a valid JWT token
-router.use('/', function (req, res, next){
-    jwt.verify(req.query.token, 'IamASecretKey1#', function(err, decoded) {
-        if(err) {
-            return res.status(401).json({
-                title: 'Unauthorized access',
-                error: err
-            })
-        }
-        //if the token is valid then let request continue to its route.
-        next();
-    })
 })
 
 router.get('/', function(req, res, next){

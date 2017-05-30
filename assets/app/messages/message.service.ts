@@ -50,7 +50,7 @@ export class MessageService {
     updateMessage(message: Message) {
         let myMsg = JSON.stringify(message);
         let myHeader = new Headers({'Content-Type':'application/json'});
-        return this.http.patch('http://localhost:3000/message/'+message.messageId,myMsg, {headers : myHeader} )
+        return this.http.patch('http://localhost:3000/message/'+message.messageId +'?token='+localStorage.getItem('token'), myMsg, {headers : myHeader} )
                 .map(response => response.json())
                 .catch(err => Observable.throw(err));
     }
