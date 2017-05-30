@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'my-authentication',
@@ -7,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
                     <nav class="col-md-8 col-md-offset-2">
                         <ul class="nav nav-tabs">
                         <li routerLinkActive="active"><a routerLink="signup">Sign Up</a></li>
-                        <li routerLinkActive="active"><a routerLink="signin">Sign In</a></li>
-                        <li routerLinkActive="active"><a routerLink="logout">Logout</a></li>
+                        <li routerLinkActive="active" *ngIf="!this.isLoggedIn()"><a routerLink="signin">Sign In</a></li>
+                        <li routerLinkActive="active" *ngIf="this.isLoggedIn()"><a routerLink="logout">Logout</a></li>
                         </ul>
                     </nav>
                 </header>
@@ -18,8 +19,10 @@ import { Component, OnInit } from '@angular/core';
                 `
     
 })
-export class AuthenticationComponent implements OnInit {
-    constructor() { }
+export class AuthenticationComponent  {
+    constructor(private authService: AuthService) { }
 
-    ngOnInit() { }
+    isLoggedIn(){
+       return this.authService.isLoggedIn();
+    }
 }
