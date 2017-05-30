@@ -1,3 +1,6 @@
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
+import { User } from './user.model';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 @Component({
@@ -6,7 +9,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 })
 export class SigninComponent implements OnInit {
     myForm: FormGroup;
-    constructor() { }
+    constructor(private authService: AuthService, private router: Router) { }
 
     ngOnInit() { 
         this.myForm = new FormGroup({
@@ -15,7 +18,18 @@ export class SigninComponent implements OnInit {
         })
     }
     onSubmit() {
-        console.log(this.myForm);
+        let user = new User(this.myForm.controls.Email.value, this.myForm.controls.Password.value;
+        this.authService.signInUser(user)
+            .subscribe(
+                data => {
+                           localStorage.setItem('token', data.token);
+                            localStorage.setItem('userId', data.userId)
+                            console.log(data);
+                            this.router.navigateByUrl('/');
+                        },
+                err => { console.error(err);        }
+
+            );
         this.myForm.reset();
     }
 }

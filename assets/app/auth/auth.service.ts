@@ -26,6 +26,15 @@ export class AuthService {
                             .catch(this.handleError);
     }
 
+    signInUser(user: User){
+        console.log(user);    
+       let myHeader = new Headers({'Content-Type': 'application/json'});
+       let body = JSON.stringify(user);
+       return this.http.post('http://localhost:3000/user/signin', body, {headers : myHeader})
+                            .map((res: Response) => res.json())
+                            .catch(this.handleError);
+    }
+
 /**
 * Handle HTTP error
 */
@@ -33,6 +42,6 @@ export class AuthService {
         let errMsg = (error.message) ? error.message :
         error.status ? `error.status - error.statusText` : 'Server error';
         console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
+        return Observable.throw(error);
     }
 }
