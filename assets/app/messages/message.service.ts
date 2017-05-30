@@ -3,28 +3,58 @@ import { Observable } from "rxjs/Observable";
 
 import { Http, Headers } from '@angular/http';
 import 'rxjs/Rx';
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 @Injectable()
 export class MessageService {
     private messages: Message[] = [];
+    msgEdit = new EventEmitter<Message>();
 
     constructor(private http: Http) {}
 
     addMessage(message:Message) {
-        this.messages.push(message);
+        
         let myMsg = JSON.stringify(message);
         let myHeader = new Headers({'Content-Type':'application/json'});
         return this.http.post('http://localhost:3000/message',myMsg, {headers : myHeader} )
-                .map(response => response.json())
+                .map(response => {
+                         const result=   response.json();
+                         const tmpMsg= new Message(result.obj.content, 'Happy', result.obj._id, null);
+                         this.messages.push(tmpMsg);
+                         return tmpMsg;
+                    })
                 .catch(err => Observable.throw(err));
         //console.log(this.messages);
     }
 
     getMessages() {
         //return Array.of(...this.messages);
-        return this.messages ;
+       return this.http.get('http://localhost:3000/message')
+                .map(response  => { 
+                                console.log("Inside service");
+                                const msgs = response.json().obj; 
+                                let newMsg: Message[] = []
+                                for (let msg of msgs) {
+                                    newMsg.push(new Message(msg.content, 'happy', msg._id,  null));
+                                  }
+                                  this.messages = newMsg;
+                                 return newMsg; 
+                            })
+                .catch(err => Observable.throw(err));
+        //return this.messages ;
+    }
+
+    editMessage(msg: Message){
+        this.msgEdit.emit(msg);
     }
     
+    updateMessage(message: Message) {
+        let myMsg = JSON.stringify(message);
+        let myHeader = new Headers({'Content-Type':'application/json'});
+        return this.http.patch('http://localhost:3000/message/'+message.messageId,myMsg, {headers : myHeader} )
+                .map(response => response.json())
+                .catch(err => Observable.throw(err));
+    }
+
     deleteMessage(message:Message) {
         this.messages.splice(this.messages.indexOf(message), 1);
     }    

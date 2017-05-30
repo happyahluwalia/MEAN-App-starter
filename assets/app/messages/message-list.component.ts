@@ -18,9 +18,11 @@ export class MessageListComponent implements OnInit {
     constructor(private messageService:MessageService) {}
 
     ngOnInit() {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
-        this.messages = this.messageService.getMessages();
+        this.messageService.getMessages()
+                            .subscribe(
+                                data => this.messages = data,
+                                err => console.error(err)
+                            );
         console.log('ng on init called');
     }
 
