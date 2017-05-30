@@ -67,4 +67,33 @@ router.patch('/:id', function(req, res, next){
     })
 })
 
+
+router.delete('/:id', function(req, res, next){
+    Message.findById(req.params.id, function(err, message) {
+        if(err){
+                return res.status(500).json({
+                         title: 'Error getting messages',
+                         error: err
+                    })
+            }
+        if(!message) {
+             return res.status(500).json({
+                         title: 'No message ',
+                         error: {message: 'Msg not found'}
+                    })
+          }
+         message.remove(function(err, result){
+                if(err) {
+                    res.status(500).json({
+                        title:'an error occurred',
+                        error: err
+                    });
+                }
+                res.status(200).json({
+                    title: 'msg updated successfully',
+                    obj: result
+                })
+            }); 
+    })
+})
 module.exports = router;
