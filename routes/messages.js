@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Message = require('../model/message');
 var jwt = require('jsonwebtoken');
+var User = require('../model/user');
 
 // Before we access any of the below routes check if the incoming
 // request has a valid JWT token
@@ -20,9 +21,19 @@ router.use('/', function (req, res, next){
 
 
 router.post('/', function(req, res, next){
-    var msg = new Message({
-        content: req.body.content
-    });
+    var decoded = jwt.decode(req.query.token);
+    User.findById(decoded.user._id, function(err, user){
+        if(err) {
+            res.status(500).json({
+                title:'an error occurred',
+                error: err
+            });
+        }
+
+     var msg = new Message({
+        content: req.body.content,
+        user: user 
+        });
     msg.save(function(err, result){
         if(err) {
             res.status(500).json({
@@ -30,11 +41,17 @@ router.post('/', function(req, res, next){
                 error: err
             });
         }
+        user.messages.push(result);
+        user.save();
         res.status(200).json({
             title: 'msg save successfully',
             obj: result
         })
+        
     });
+
+    })
+    
 })
 
 router.get('/', function(req, res, next){
