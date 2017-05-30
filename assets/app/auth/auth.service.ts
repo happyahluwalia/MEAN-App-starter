@@ -27,7 +27,6 @@ export class AuthService {
     }
 
     signInUser(user: User){
-        console.log(user);    
        let myHeader = new Headers({'Content-Type': 'application/json'});
        let body = JSON.stringify(user);
        return this.http.post('http://localhost:3000/user/signin', body, {headers : myHeader})

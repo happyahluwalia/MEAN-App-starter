@@ -18,13 +18,12 @@ export class SigninComponent implements OnInit {
         })
     }
     onSubmit() {
-        let user = new User(this.myForm.controls.Email.value, this.myForm.controls.Password.value;
+        let user = new User(this.myForm.controls.Email.value, this.myForm.controls.Password.value);
         this.authService.signInUser(user)
             .subscribe(
                 data => {
                            localStorage.setItem('token', data.token);
                             localStorage.setItem('userId', data.userId)
-                            console.log(data);
                             this.router.navigateByUrl('/');
                         },
                 err => { console.error(err);        }
