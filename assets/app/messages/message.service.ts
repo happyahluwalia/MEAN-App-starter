@@ -18,7 +18,7 @@ export class MessageService {
         return this.http.post('http://localhost:3000/message' +'?token='+localStorage.getItem('token'),myMsg, {headers : myHeader} )
                 .map(response => {
                          const result=   response.json();
-                         const tmpMsg= new Message(result.obj.content, 'Happy', result.obj._id, null);
+                         const tmpMsg= new Message(result.obj.content, msg.user.firstName, result.obj._id, msg.user._id);
                          this.messages.push(tmpMsg);
                          return tmpMsg;
                     })
@@ -34,7 +34,7 @@ export class MessageService {
                                 const msgs = response.json().obj; 
                                 let newMsg: Message[] = []
                                 for (let msg of msgs) {
-                                    newMsg.push(new Message(msg.content, 'happy', msg._id,  null));
+                                    newMsg.push(new Message(msg.content, msg.user.firstName, msg._id,  msg.user._id));
                                   }
                                   this.messages = newMsg;
                                  return newMsg; 

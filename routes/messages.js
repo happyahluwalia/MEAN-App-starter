@@ -56,6 +56,7 @@ router.post('/', function(req, res, next){
 
 router.get('/', function(req, res, next){
     Message.find()
+            .populate('user','firstName')
             .exec()
             .then(function(result) {
                     res.status(200).json({
