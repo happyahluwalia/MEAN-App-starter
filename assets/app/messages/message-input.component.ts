@@ -12,7 +12,14 @@ export class MessageInputComponent {
     constructor(private messageService: MessageService) {}
 
     onSubmit(form:NgForm) {
-        this.messageService.addMessage(new Message(form.value.content, 'happy'));
+        
+        const msg = new Message(form.value.content,'happy');
+        console.log(msg);
+        this.messageService.addMessage(msg)
+             .subscribe(
+                 data => console.log(data),
+                 err => console.error(err)
+             );
         form.reset();
     }
 

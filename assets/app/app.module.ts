@@ -14,6 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from "./app.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpModule } from "@angular/http";
 
 @NgModule({
     declarations: [AppComponent, 
@@ -27,7 +28,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
                    SigninComponent,
                    SignupComponent],
     providers: [MessageService],                   
-    imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule],
+    imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpModule],
     bootstrap: [AppComponent]
 })
 export class AppModule {
