@@ -15,7 +15,7 @@ export class MessageService {
         
         let myMsg = JSON.stringify(message);
         let myHeader = new Headers({'Content-Type':'application/json'});
-        return this.http.post('http://localhost:3000/message',myMsg, {headers : myHeader} )
+        return this.http.post('http://localhost:3000/message' +'?token='+localStorage.getItem('token'),myMsg, {headers : myHeader} )
                 .map(response => {
                          const result=   response.json();
                          const tmpMsg= new Message(result.obj.content, 'Happy', result.obj._id, null);
@@ -28,7 +28,7 @@ export class MessageService {
 
     getMessages() {
         //return Array.of(...this.messages);
-       return this.http.get('http://localhost:3000/message')
+       return this.http.get('http://localhost:3000/message' +'?token='+localStorage.getItem('token'))
                 .map(response  => { 
                                 console.log("Inside service");
                                 const msgs = response.json().obj; 
@@ -57,7 +57,7 @@ export class MessageService {
 
     deleteMessage(message:Message) {
         this.messages.splice(this.messages.indexOf(message), 1);
-        return this.http.delete('http://localhost:3000/message/'+message.messageId)
+        return this.http.delete('http://localhost:3000/message/'+message.messageId +'?token='+localStorage.getItem('token'))
                 .map(response => response.json())
                 .catch(err => Observable.throw(err));
     }    
