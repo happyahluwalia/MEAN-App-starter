@@ -11,7 +11,7 @@ router.use('/', function (req, res, next){
         if(err) {
             return res.status(401).json({
                 title: 'Unauthorized access',
-                error: err
+                error: {'message': 'Please login before accessing messages'}
             })
         }
         //if the token is valid then let request continue to its route.
@@ -29,7 +29,6 @@ router.post('/', function(req, res, next){
                 error: err
             });
         }
-
      var msg = new Message({
         content: req.body.content,
         user: user 

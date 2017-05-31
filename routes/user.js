@@ -15,7 +15,7 @@ router.post('/',function(req, res, next){
            if(err) {
                return res.status(500).json(
                    {message: 'Error creating user',
-                   error: err}
+                   error: {'message': 'Error creating User'}}
                )
            }
             res.status(201).json(
@@ -38,7 +38,7 @@ router.post('/signin',function(req, res, next){
                return res.status(401).json(
                    {
                        message: 'Authentication failure',
-                       error: {message :'Login failure1'}
+                       error: {message :'Login failure'}
                    }); 
            }
            if(!bcrypt.compareSync(req.body.password, result.password))
@@ -46,7 +46,7 @@ router.post('/signin',function(req, res, next){
                 return res.status(401).json(
                    {
                        message: 'Authentication failure',
-                       error: {message :'Login failure2'}
+                       error: {message :'Login failure'}
                    });
            }
            var token = jwt.sign({user: result }, 'IamASecretKey1#', {expiresIn:7200})
