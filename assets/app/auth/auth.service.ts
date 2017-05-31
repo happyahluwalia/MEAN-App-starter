@@ -1,3 +1,4 @@
+import { ErrorService } from './../error/error.service';
 import { User } from './user.model';
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
@@ -13,7 +14,7 @@ export class AuthService {
 * @param {Http} http - The injected Http.
 * @constructor
 */
-    constructor(private http: Http) {}
+    constructor(private http: Http, private errorService: ErrorService) {}
 /**
 * Returns an Observable for the HTTP GET request for the JSON resource.
 * @return {string[]} The Observable for the HTTP request.
@@ -23,7 +24,10 @@ export class AuthService {
         let body = JSON.stringify(user);
         return this.http.post('http://localhost:3000/user', body, {headers : myHeader})
                             .map((res: Response) => res.json())
-                            .catch(this.handleError);
+                            .catch((err:Response) => {
+                                    this.errorService.handleError(err.json()); 
+                                    return Observable.throw(err);
+                                 });
     }
 
     signInUser(user: User){
@@ -31,7 +35,11 @@ export class AuthService {
        let body = JSON.stringify(user);
        return this.http.post('http://localhost:3000/user/signin', body, {headers : myHeader})
                             .map((res: Response) => res.json())
-                            .catch(this.handleError);
+                            //.catch(this.handleError);
+                            .catch((err:Response) => {
+                                 this.errorService.handleError(err.json()); 
+                                 return Observable.throw(err);
+                               });                            
     }
 
     logout() {
@@ -40,15 +48,5 @@ export class AuthService {
 
     isLoggedIn() {
         return localStorage.getItem('token') != null
-    }
-
-/**
-* Handle HTTP error
-*/
-    private handleError (error: any) {
-        let errMsg = (error.message) ? error.message :
-        error.status ? `error.status - error.statusText` : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(error);
     }
 }

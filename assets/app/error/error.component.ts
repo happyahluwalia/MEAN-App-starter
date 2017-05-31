@@ -1,3 +1,4 @@
+import { ErrorService } from './error.service';
 import { Error } from './error.model';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,10 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ErrorComponent implements OnInit {
     error: Error;
-    display: 'none';
-    constructor() { }
+    display = 'none';
+    constructor(private errorService: ErrorService) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.errorService.errorOccured
+                .subscribe(
+                    (error : Error) => {
+                        this.error = error;
+                        this.display = 'block';
+                    }
+                );
+     }
     onErrorClose() {
         this.display = 'none';
     }
