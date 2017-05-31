@@ -1,3 +1,4 @@
+import { ErrorComponent } from './error/error.component';
 import { AuthService } from './auth/auth.service';
 import { SignupComponent } from './auth/signup.component';
 import { SigninComponent } from './auth/signin.component';
@@ -27,7 +28,8 @@ import { HttpModule } from "@angular/http";
                    HeaderComponent,
                    LogoutComponent,
                    SigninComponent,
-                   SignupComponent],
+                   SignupComponent,
+                   ErrorComponent],
     providers: [MessageService, AuthService],                   
     imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpModule],
     bootstrap: [AppComponent]
