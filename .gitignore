@@ -28,5 +28,8 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+*.json
+*.ngfactory.ts
+*.shim.ngstyle.ts
 
-/public/js
+/public/js/**

@@ -1,38 +1,24 @@
+import { MessageModule } from './messages/message.module';
 import { ErrorService } from './error/error.service';
 import { ErrorComponent } from './error/error.component';
 import { AuthService } from './auth/auth.service';
-import { SignupComponent } from './auth/signup.component';
-import { SigninComponent } from './auth/signin.component';
-import { LogoutComponent } from './auth/logout.component';
 import { AppRoutingModule } from './app.routing';
 import { HeaderComponent } from './shared/header.component';
 import { AuthenticationComponent } from './auth/authentication.component';
-import { MessagesComponent } from './messages/messages.component';
-import { MessageComponent } from './messages/message.component';
-import { MessageListComponent } from './messages/message-list.component';
-import { MessageInputComponent } from './messages/message-input.component';
-import { MessageService } from './messages/message.service';
+import { AppComponent } from "./app.component";
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from "./app.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
 @NgModule({
     declarations: [AppComponent, 
-                   MessageComponent, 
-                   MessageListComponent, 
-                   MessageInputComponent,
-                   MessagesComponent,
                    AuthenticationComponent,
                    HeaderComponent,
-                   LogoutComponent,
-                   SigninComponent,
-                   SignupComponent,
                    ErrorComponent],
-    providers: [MessageService, AuthService, ErrorService],                   
-    imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpModule],
+    providers: [AuthService, ErrorService],                   
+    imports: [MessageModule, BrowserModule, AppRoutingModule, HttpModule],
     bootstrap: [AppComponent]
 })
 export class AppModule {
